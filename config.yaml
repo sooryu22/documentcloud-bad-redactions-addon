@@ -1,7 +1,7 @@
 # The title is the title of your Add-On
-title: Hello World
+title: Find Bad Redactions
 # The description will be shown above the form when activating the Add-On
-description: This is an updated simple test add-on
+description: This is an add-on that identifies bad redactions and returns the page numbers, bounding boxes and the text.
 # Type should always be object
 type: object
 # How does this add-on accept documents
@@ -19,5 +19,3 @@ properties:
     title: Name
     # a string is text
     type: string
-
-
