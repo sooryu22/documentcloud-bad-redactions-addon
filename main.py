@@ -28,7 +28,7 @@ class BadRedactions(AddOn):
 
         for document in self.client.documents.list(id__in=self.documents):
             bad_redactions = xray.inspect(document.pdf)
-            with open("bad_redactions.csv", "w+") as file_:
+            with open("bad_redactions_"+"for_"+str(document.title)+".csv", "w+") as file_:
                 field_names = ['page_num', 'bbox', 'text']
                 writer = csv.DictWriter(file_, fieldnames=field_names)
                 writer.writeheader()
