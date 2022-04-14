@@ -1,9 +1,7 @@
 
-# DocumentCloud Add-On Example
+# DocumentCloud Add-On — Identify Bad Redactions
 
-This repository contains an example Add-On for DocumentCloud.  It is designed
-to be copied and modified to allow one to easily write Add-Ons to bring custom
-functionality to DocumentCloud.
+This DocumentCloud Add-On allows you to select multiple documents or projects, returning csv files contraining the page numbers, bounding boxes and the text.
 
 ## Files
 
@@ -77,23 +75,19 @@ You can also pass in a list of document IDs (`--documents`), a search query
 (`--query`), and JSON parameters for your Add-On (`--data`) - be sure to
 properly quote your JSON at the command line.
 
-Example invocation:
-```
-python main.py --documents 123 --data '{"name": "World"}'
-```
-
 ### main.py
 
-This is the file to edit to implement your Add-On specific functionality.  You
-should define a class which inherits from `AddOn` from `addon.py`.  Then you
-can instantiate a new instance and call the main method, which is the entry
-point for your Add-On logic.  You may access the data parsed by `AddOn` as well
-as using the helper methods defined there.  The `HelloWorld` example Add-On
-demonstrates using many of these features.
+This is the file to edit to implement your Add-On specific functionality. You may access the data parsed by `AddOn` as well as using the helper methods defined there.  The `bad-redactions`  Add-On demonstrates using many of these features.
 
 If you need to add more files, remember to instantiate the main Add-On class
 from a file called `main.py` - that is what the GitHub action will call with
 the Add-On parameters upon being dispatched.
+
+### testing
+Example invocation:
+```
+python3 main.py --username "DC.USERNAME" --password "DC.PASSWORD" --documents 12341234
+```
 
 ### config.yaml
 
