@@ -26,20 +26,19 @@ class BadRedactions(AddOn):
 
         self.set_message("Identifying Bad Redactions start!")
 
-        for document in self.client.documents.list(id__in=self.documents):
-            bad_redactions = xray.inspect(document.pdf)
-            with open("bad_redactions_"+"for_"+str(document.title)+".csv", "w+") as file_:
-                field_names = ['page_num', 'bbox', 'text']
-                writer = csv.DictWriter(file_, fieldnames=field_names)
-                writer.writeheader()
+        with open("bad_redactions.csv", "w+") as file_:
+            field_names = ['document_id', 'page_num', 'bbox', 'text']
+            writer = csv.DictWriter(file_, fieldnames=field_names)
+            writer.writeheader()
+
+            for document in self.client.documents.list(id__in=self.documents):
+                bad_redactions = xray.inspect(document.pdf)
                 for key in bad_redactions.keys():
                     for i in range(len(bad_redactions[key])):
-                        page_num = key
-                        bbox = bad_redactions[key][i]['bbox']
-                        text = bad_redactions[key][i]['text']
-                        writer.writerow({'page_num': page_num,
-                                        'bbox': bbox,
-                                         'text': text})
+                        writer.writerow({'document_id': document.id,
+                                         'page_num': key,
+                                         'bbox': bad_redactions[key][i]['bbox'],
+                                         'text': bad_redactions[key][i]['text']})
 
                 print("CSV Document Contents:")
                 # go to the beginning of the file
