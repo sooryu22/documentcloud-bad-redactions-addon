@@ -39,14 +39,7 @@ class BadRedactions(AddOn):
                                          'page_num': key,
                                          'bbox': bad_redactions[key][i]['bbox'],
                                          'text': bad_redactions[key][i]['text']})
-
-            print("CSV Document Contents:")
-            # go to the beginning of the file
-            file_.seek(0)
-            # print the file contents
-            print(file_.read())
             self.upload_file(file_)
-
         self.set_message("Identidying Bad Redactions end!")
 
 
