@@ -45,9 +45,6 @@ At the top level you have the following properties:
   form when someone runs the add-on
 * `type` - This should always be set to `object`
 * `properties` - This is an object describing the data fields your add-on accepts
-    * The name will be the name of the variable the data is returned in
-    * `title` - The label shown on the form for this field
-    * `type` - This may be `string`, `number` or `boolean`
 
 ### requirements.txt
 
