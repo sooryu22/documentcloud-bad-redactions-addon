@@ -1,7 +1,7 @@
 
 # DocumentCloud Add-On — Identify Bad Redactions
 
-This DocumentCloud Add-On allows you to select multiple documents or projects, creating annotations where bad redactions exist, and returning csv files contraining the page numbers, bounding boxes and the text.
+This DocumentCloud Add-On allows you to select multiple documents or projects, creating annotations where bad redactions exist, and returning a csv file contraining the document_id's, page numbers, bounding boxes and the text.
 
 ## Files
 
