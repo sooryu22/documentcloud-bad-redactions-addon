@@ -35,10 +35,16 @@ class BadRedactions(AddOn):
                 bad_redactions = xray.inspect(document.pdf)
                 for key in bad_redactions.keys():
                     for i in range(len(bad_redactions[key])):
+                        bbox = bad_redactions[key][i]['bbox']
                         writer.writerow({'document_id': document.id,
                                          'page_num': key,
-                                         'bbox': bad_redactions[key][i]['bbox'],
+                                         'bbox': bbox,
                                          'text': bad_redactions[key][i]['text']})
+
+                        # creating annotations where bad redactions exist
+                        title = "bad redactions"
+                        document.create(self, title, document.page, content="bad redactions exist here",
+                                        access="private", x1=bbox[0], y1=bbox[1], x2=bbox[2], y2=bbox[3])
             self.upload_file(file_)
         self.set_message("Identidying Bad Redactions end!")
 
