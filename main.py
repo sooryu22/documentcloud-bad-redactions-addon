@@ -43,7 +43,7 @@ class BadRedactions(AddOn):
 
                         # creating annotations where bad redactions exist
                         title = "bad redactions"
-                        height = document.maxheight
+                        height = 900
                         document.annotations.create(self, title, document.pages, content="",
                                                     access="private", x1=bbox[0]/height, y1=bbox[1]/700, x2=bbox[2]/height, y2=bbox[3]/700)
             self.upload_file(file_)
