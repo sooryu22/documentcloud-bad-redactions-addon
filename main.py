@@ -45,7 +45,7 @@ class BadRedactions(AddOn):
                         title = "bad redactions"
                         height = 900
                         document.annotations.create(self, title, document.pages, content="",
-                                                    access="private", x1=bbox[0]/height, y1=bbox[1]/700, x2=bbox[2]/height, y2=bbox[3]/700)
+                                                    access="private", x1=bbox[0]/700, y1=bbox[1]/height, x2=bbox[2]/700, y2=bbox[3]/height)
             self.upload_file(file_)
         self.set_message("Identidying Bad Redactions end!")
 
