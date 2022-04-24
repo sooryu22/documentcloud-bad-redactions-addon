@@ -43,8 +43,8 @@ class BadRedactions(AddOn):
 
                         # creating annotations where bad redactions exist
                         title = "bad redactions"
-                        document.create(self, title, document.page, content="bad redactions exist here",
-                                        access="private", x1=bbox[0], y1=bbox[1], x2=bbox[2], y2=bbox[3])
+                        document.annotations.create(self, title, document.page, content="bad redactions exist here",
+                                                    access="private", x1=bbox[0], y1=bbox[1], x2=bbox[2], y2=bbox[3])
             self.upload_file(file_)
         self.set_message("Identidying Bad Redactions end!")
 
