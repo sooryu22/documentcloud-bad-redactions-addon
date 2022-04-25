@@ -1,5 +1,5 @@
 # The title is the title of your Add-On
-title: Find Bad Redactions
+title: Bad Redactions
 # The description will be shown above the form when activating the Add-On
 description: This is an add-on that identifies bad redactions and returns the page numbers, bounding boxes and the text.
 # Type should always be object
