@@ -16,7 +16,7 @@ the Add-On parameters upon being dispatched.
 ### testing
 Example invocation:
 ```
-python3 main.py --username "DC.USERNAME" --password "DC.PASSWORD" --documents 12341234
+python3 main.py --username "DC.USERNAME" --password "DC.PASSWORD" --documents 12345678
 ```
 
 ### config.yaml
@@ -29,11 +29,16 @@ the basics to get started:
 
 ```yaml
 # The title is the title of your Add-On
-title: Hello World
+title: Bad Redactions
 # The description will be shown above the form when activating the Add-On
-description: This is an updated simple test add-on
+description: This will create annotations where bad redactions exist, and export their the page numbers, bounding boxes and the text in a csv file.
 # Type should always be object
 type: object
+# How does this add-on accept documents
+# If more than one type is specified, the user will be prompted to choose one
+documents:
+  # By the currently selected documents
+  - selected
 # Properties are the fields for your form
 properties: {}
 ```
