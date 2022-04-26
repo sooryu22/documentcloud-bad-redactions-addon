@@ -11,6 +11,7 @@ DocumentCloud using the standard API
 from documentcloud.addon import AddOn
 import xray
 import csv
+from listcrunch import uncrunch
 
 
 class BadRedactions(AddOn):
@@ -35,7 +36,16 @@ class BadRedactions(AddOn):
             for document in self.client.documents.list(id__in=self.documents):
                 # identifying bad redactions using the x-ray library
                 bad_redactions = xray.inspect(document.pdf)
+
                 for page in bad_redactions.keys():
+                    # get the page spec from the api
+                    dimensions = uncrunch(document.page_spec)
+                    # dimensions is now a list of strings
+                    dimension = dimensions[3]
+                    # dimension is now the dimension of the 4th (0 indexed) page
+                    width, height = [float(d) for d in dimension.split("x")]
+                    # the dimension is a string "697.0x792.0" two floats as string separated by a "x"
+
                     for i in range(len(bad_redactions[page])):
                         bbox = bad_redactions[page][i]['bbox']
                         writer.writerow({'document_id': document.id,
@@ -45,8 +55,6 @@ class BadRedactions(AddOn):
 
                         # creating annotations where bad redactions occur
                         title = "bad redactions"
-                        width = 612
-                        height = 792
                         document.annotations.create(
                             title, page-1, "bed redactions exist", "private", bbox[0]/width, bbox[1]/height, bbox[2]/width, bbox[3]/height)
             self.upload_file(file_)
