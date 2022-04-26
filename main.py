@@ -33,6 +33,8 @@ class BadRedactions(AddOn):
             writer = csv.DictWriter(file_, fieldnames=field_names)
             writer.writeheader()
 
+            counter = 0
+
             for document in self.client.documents.list(id__in=self.documents):
                 # identifying bad redactions using the x-ray library
                 bad_redactions = xray.inspect(document.pdf)
@@ -47,6 +49,7 @@ class BadRedactions(AddOn):
                     # the dimension is a string "697.0x792.0" two floats as string separated by a "x"
 
                     for i in range(len(bad_redactions[page])):
+                        counter += 1
                         bbox = bad_redactions[page][i]['bbox']
                         writer.writerow({'document_id': document.id,
                                          'page_num': page,
@@ -56,9 +59,13 @@ class BadRedactions(AddOn):
                         # creating annotations where bad redactions occur
                         title = "bad redactions"
                         document.annotations.create(
-                            title, page-1, "bed redactions exist", "private", bbox[0]/width, bbox[1]/height, bbox[2]/width, bbox[3]/height)
+                            title, page-1, "bad redactions exist", "private", bbox[0]/width, bbox[1]/height, bbox[2]/width, bbox[3]/height)
             self.upload_file(file_)
         self.set_message("Identidying Bad Redactions end!")
+        if counter == 0:
+            self.set_message("No Bad Redactions Found")
+        else:
+            self.set_message(counter, "Bad Redactions Found")
 
 
 if __name__ == "__main__":
