@@ -60,12 +60,11 @@ class BadRedactions(AddOn):
                         title = "bad redactions"
                         document.annotations.create(
                             title, page-1, "bad redactions exist", "private", bbox[0]/width, bbox[1]/height, bbox[2]/width, bbox[3]/height)
-            self.upload_file(file_)
-        self.set_message("Identidying Bad Redactions end!")
-        if counter == 0:
-            self.set_message("No Bad Redactions Found")
-        else:
-            self.set_message(counter, "Bad Redactions Found")
+            if counter == 0:
+                self.set_message("No Bad Redactions Found")
+            else:
+                self.set_message(str(counter) + " Bad Redactions Found")
+                self.upload_file(file_)
 
 
 if __name__ == "__main__":
