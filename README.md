@@ -1,7 +1,7 @@
 
-# DocumentCloud Add-On — Identify Bad Redactions
+# DocumentCloud Add-On — Identify/Redact Bad Redactions
 
-This DocumentCloud Add-On allows you to select multiple documents or projects, creating annotations where bad redactions exist, and returning a csv file contraining the document_id's, page numbers, bounding boxes and the text.
+This DocumentCloud Add-On allows you to select multiple documents or projects, creating annotations where bad redactions exist, and returning a csv file contraining the document_id's, page numbers, bounding boxes and the text. There’s an option to redact bad redactions and delete any existing bad redaction annotations.
 
 ## Files
 
@@ -31,7 +31,7 @@ the basics to get started:
 # The title is the title of your Add-On
 title: Bad Redactions
 # The description will be shown above the form when activating the Add-On
-description: This will create annotations where bad redactions exist, and export their the page numbers, bounding boxes and the text in a csv file.
+description: This will create annotations where bad redactions exist, and export their the page numbers, bounding boxes and the text in a csv file. There’s an option to redact bad redactions and delete any existing bad redaction annotations.
 # Type should always be object
 type: object
 # How does this add-on accept documents
@@ -40,7 +40,11 @@ documents:
   # By the currently selected documents
   - selected
 # Properties are the fields for your form
-properties: {}
+properties:
+    # the key is the name of the variable that will be returned to your code
+    fix:
+      title: Redact bad redactions found?
+      type: boolean
 ```
 
 At the top level you have the following properties:
