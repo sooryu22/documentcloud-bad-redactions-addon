@@ -32,7 +32,7 @@ class BadRedactions(AddOn):
 
         # creating a csv file
         with open("bad_redactions.csv", "w+") as file_:
-            field_names = ['document_id', 'page_num', 'bbox', 'text']
+            field_names = ["document_id", "page_num", "bbox", "text"]
             writer = csv.DictWriter(file_, fieldnames=field_names)
             writer.writeheader()
 
@@ -55,37 +55,57 @@ class BadRedactions(AddOn):
 
                     for i in range(len(bad_redactions[page])):
                         counter += 1
-                        bbox = bad_redactions[page][i]['bbox']
-                        writer.writerow({'document_id': document.id,
-                                         'page_num': page,
-                                         'bbox': bbox,
-                                         'text': bad_redactions[page][i]['text']})
+                        bbox = bad_redactions[page][i]["bbox"]
+                        writer.writerow(
+                            {
+                                "document_id": document.id,
+                                "page_num": page,
+                                "bbox": bbox,
+                                "text": bad_redactions[page][i]["text"],
+                            }
+                        )
 
                         # creating annotations where bad redactions occur
                         title = "bad redaction"
 
                         # if the redaction is being fixed, add it to the list of bound boxes for the post request
-                        if(redbadred):
+                        if redbadred:
                             # redact bad redactions
                             # append the specific json dict for this page to global dict
                             eachRedact.append(
-                                {"page_number": page-1, "x1": bbox[0]/width, "y1": bbox[1]/height, "x2": bbox[2]/width, "y2": bbox[3]/height})
+                                {
+                                    "page_number": page - 1,
+                                    "x1": bbox[0] / width,
+                                    "y1": bbox[1] / height,
+                                    "x2": bbox[2] / width,
+                                    "y2": bbox[3] / height,
+                                }
+                            )
                         else:
                             # if not, create an annotation for it
                             document.annotations.create(
-                                title, page-1, "bad redaction exists", "private", bbox[0]/width, bbox[1]/height, bbox[2]/width, bbox[3]/height)
+                                title,
+                                page - 1,
+                                "bad redaction exists",
+                                "private",
+                                bbox[0] / width,
+                                bbox[1] / height,
+                                bbox[2] / width,
+                                bbox[3] / height,
+                            )
 
-                if (redbadred):
+                if redbadred:
                     # go through and delete any existing bad redaction annotations
                     for annotation in document.annotations:
                         if annotation.title == "bad redaction":
                             annotation.delete()
 
-            if(redbadred and eachRedact != []):
+            if redbadred and eachRedact != []:
                 self.set_message("Redacting Bad Redactions start!")
                 # make the api call for this document
                 self.client.post(
-                    f"documents/{document.id}/redactions/", json=eachRedact)
+                    f"documents/{document.id}/redactions/", json=eachRedact
+                )
 
             if counter == 0:
                 self.set_message("No Bad Redactions Found")
