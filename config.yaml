@@ -1,7 +1,11 @@
 # The title is the title of your Add-On
 title: Bad Redactions
 # The description will be shown above the form when activating the Add-On
-description: This will create annotations where bad redactions exist, and export document_ids, page numbers, bounding boxes and the text in a csv file. There’s an option to redact bad redactions and delete any existing bad redaction annotations.
+description: This Add-on allows you to select multiple documents, uses x-ray library to identify bad redactions, creates annotations where bad redactions exist, and exports document_ids, page numbers, bounding boxes and the text in a csv file. By checking the box, this will redact bad redactions and delete any existing bad redaction annotations.
+
+
+    **Warning**: Once you check this box and run this Add-On, you cannot undo redactions.
+    [Learn more about x-ray] (https://pypi.org/project/x-ray/)
 # Type should always be object
 type: object
 # How does this add-on accept documents
