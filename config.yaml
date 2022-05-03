@@ -8,7 +8,7 @@ description: >-
 
 
     **Warning**: Once you check this box and run this Add-On, you cannot undo redactions.
-    [Learn more about x-ray] (https://pypi.org/project/x-ray/).
+    [Learn more about x-ray](https://pypi.org/project/x-ray/).
 # Type should always be object
 type: object
 # How does this add-on accept documents
