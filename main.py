@@ -21,11 +21,13 @@ class BadRedactions(AddOn):
         """The main add-on functionality goes here."""
         # fetch your add-on specific data
         if not self.documents:
-            print("not documents")
+            print("no documents")
             self.set_message("Please select at least one document")
             return
 
         self.set_message("Identifying Bad Redactions start!")
+
+        redbadred = self.data.get("fix")
 
         # creating a csv file
         with open("bad_redactions.csv", "w+") as file_:
@@ -38,6 +40,8 @@ class BadRedactions(AddOn):
             for document in self.client.documents.list(id__in=self.documents):
                 # identifying bad redactions using the x-ray library
                 bad_redactions = xray.inspect(document.pdf)
+                # to hold the redacttion json dictionary for each individual page in this document
+                eachRedact = []
 
                 for page in bad_redactions.keys():
                     # get the page spec from the api
@@ -46,7 +50,7 @@ class BadRedactions(AddOn):
                     dimension = dimensions[3]
                     # dimension is now the dimension of the 4th (0 indexed) page
                     width, height = [float(d) for d in dimension.split("x")]
-                    # the dimension is a string "697.0x792.0" two floats as string separated by a "x"
+                    # the dimension is a string "612.0x792.0" two floats as string separated by a "x"
 
                     for i in range(len(bad_redactions[page])):
                         counter += 1
@@ -58,13 +62,34 @@ class BadRedactions(AddOn):
 
                         # creating annotations where bad redactions occur
                         title = "bad redactions"
-                        document.annotations.create(
-                            title, page-1, "bad redactions exist", "private", bbox[0]/width, bbox[1]/height, bbox[2]/width, bbox[3]/height)
+
+                        # if the redaction is being fixed, add it to the list of bound boxes for the post request
+                        if(redbadred):
+                            # redact bad redactions
+                            # append the specific json dict for this page to global dict
+                            eachRedact.append(
+                                {"page_number": page-1, "x1": bbox[0]/width, "y1": bbox[1]/height, "x2": bbox[2]/width, "y2": bbox[3]/height})
+                        else:
+                            # if not, create an annotation for it
+                            document.annotations.create(
+                                title, page-1, "bad redactions exist", "private", bbox[0]/width, bbox[1]/height, bbox[2]/width, bbox[3]/height)
+
+                if (redbadred):
+                    # go through and delete any existing bad redaction annotations
+                    for annotation in document.annotations:
+                        if annotation.title == "bad redactions":
+                            annotation.delete()
+
+            if(redbadred and eachRedact != []):
+                # make the api call for this document
+                self.client.post(
+                    f"documents/{document.id}/redactions/", json=eachRedact)
+
             if counter == 0:
                 self.set_message("No Bad Redactions Found")
             else:
-                self.set_message(str(counter) + " Bad Redactions Found")
                 self.upload_file(file_)
+                self.set_message(str(counter) + " Bad Redactions Found")
 
 
 if __name__ == "__main__":
