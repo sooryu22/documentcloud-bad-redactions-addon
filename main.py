@@ -1,6 +1,7 @@
 """
 This is an identifying bad redactions add-on for DocumentCloud.
-Use the x-ray library, creates annotations where bad redactions exist, and returns the bounding boxes and the text.
+Use the x-ray library, creates annotations where bad redactions exist, and returns a csv file including the bounding boxes and the text.
+Option to redact bad redactions and delete any existing bad redaction annotations.
 
 It demonstrates how to write a add-on which can be activated from the
 DocumentCloud add-on system and run using Github Actions.  It receives data
@@ -61,7 +62,7 @@ class BadRedactions(AddOn):
                                          'text': bad_redactions[page][i]['text']})
 
                         # creating annotations where bad redactions occur
-                        title = "bad redactions"
+                        title = "bad redaction"
 
                         # if the redaction is being fixed, add it to the list of bound boxes for the post request
                         if(redbadred):
@@ -72,15 +73,16 @@ class BadRedactions(AddOn):
                         else:
                             # if not, create an annotation for it
                             document.annotations.create(
-                                title, page-1, "bad redactions exist", "private", bbox[0]/width, bbox[1]/height, bbox[2]/width, bbox[3]/height)
+                                title, page-1, "bad redaction exists", "private", bbox[0]/width, bbox[1]/height, bbox[2]/width, bbox[3]/height)
 
                 if (redbadred):
                     # go through and delete any existing bad redaction annotations
                     for annotation in document.annotations:
-                        if annotation.title == "bad redactions":
+                        if annotation.title == "bad redaction":
                             annotation.delete()
 
             if(redbadred and eachRedact != []):
+                self.set_message("Redacting Bad Redactions start!")
                 # make the api call for this document
                 self.client.post(
                     f"documents/{document.id}/redactions/", json=eachRedact)
