@@ -7,7 +7,7 @@ This DocumentCloud Add-On allows you to select multiple documents or projects, c
 
 ### main.py
 
-This is the file that implements the bad redactions Add-On specific functionality.
+This is the file that implements the `bad-redactions` Add-On specific functionality.
 
 ### testing
 Example invocation:
