@@ -1,7 +1,7 @@
 # The title is the title of your Add-On
 title: Bad Redactions
 # The description will be shown above the form when activating the Add-On
-description: This will create annotations where bad redactions exist, and export their the page numbers, bounding boxes and the text in a csv file. There’s an option to redact bad redactions and delete any existing bad redaction annotations.
+description: This will create annotations where bad redactions exist, and export document_ids, page numbers, bounding boxes and the text in a csv file. There’s an option to redact bad redactions and delete any existing bad redaction annotations.
 # Type should always be object
 type: object
 # How does this add-on accept documents
