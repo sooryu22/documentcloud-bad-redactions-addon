@@ -7,16 +7,12 @@ This DocumentCloud Add-On allows you to select multiple documents or projects, c
 
 ### main.py
 
-This is the file to edit to implement your Add-On specific functionality. You may access the data parsed by `AddOn` as well as using the helper methods defined there.  The `bad-redactions`  Add-On demonstrates using many of these features.
-
-If you need to add more files, remember to instantiate the main Add-On class
-from a file called `main.py` - that is what the GitHub action will call with
-the Add-On parameters upon being dispatched.
+This is the file that implements the bad redactions Add-On specific functionality.
 
 ### testing
 Example invocation:
 ```
-python3 main.py --username "DC.USERNAME" --password "DC.PASSWORD" --documents 12345678
+python main.py --username "DC.USERNAME" --password "DC.PASSWORD" --documents 12345678
 ```
 
 ### config.yaml
