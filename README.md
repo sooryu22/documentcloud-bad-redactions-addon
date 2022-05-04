@@ -17,46 +17,10 @@ python main.py --username "DC.USERNAME" --password "DC.PASSWORD" --documents 123
 
 ### config.yaml
 
-This is a YAML file which defines the data your Add-On expects to receive.
+This is a YAML file which defines the data this `bad-redactions` Add-On expects to receive.
 DocumentCloud will use it to show a corresponding form with the proper fields.
 It uses the [JSON Schema](https://json-schema.org/) format, but allows you to
-use YAML for convenience.  You may read more about JSON Schema, but here are
-the basics to get started:
-
-```yaml
-# The title is the title of your Add-On
-title: Bad Redactions
-# The description will be shown above the form when activating the Add-On
-description: >-
-    This Add-on allows you to select multiple documents, uses x-ray library to identify bad redactions,
-    creates annotations where bad redactions exist, and exports document_ids, page numbers, bounding boxes and the text in a csv file.
-    By checking the box, this will redact bad redactions and delete any existing bad redaction annotations.
-
-
-    **Warning**: Once you check this box and run this Add-On, you cannot undo redactions.
-    [Learn more about x-ray](https://pypi.org/project/x-ray/).
-# Type should always be object
-type: object
-# How does this add-on accept documents
-# If more than one type is specified, the user will be prompted to choose one
-documents:
-  # By the currently selected documents
-  - selected
-# Properties are the fields for your form
-properties:
-    # the key is the name of the variable that will be returned to your code
-    fix:
-      title: Redact bad redactions found?
-      type: boolean
-```
-
-At the top level you have the following properties:
-
-* `title` - The title for your Add-On
-* `description` - a description for your Add-On - will be displayed above the
-  form when someone runs the add-on
-* `type` - This should always be set to `object`
-* `properties` - This is an object describing the data fields your add-on accepts
+use YAML for convenience.  
 
 ### requirements.txt
 
