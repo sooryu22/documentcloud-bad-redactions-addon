@@ -48,8 +48,8 @@ class BadRedactions(AddOn):
                     # get the page spec from the api
                     dimensions = uncrunch(document.page_spec)
                     # dimensions is now a list of strings
-                    dimension = dimensions[3]
-                    # dimension is now the dimension of the 4th (0 indexed) page
+                    dimension = dimensions[page - 1]
+                    # dimension is now the dimension of the current page
                     width, height = [float(d) for d in dimension.split("x")]
                     # the dimension is a string "612.0x792.0" two floats as string separated by a "x"
 
